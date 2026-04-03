@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>世界のガストロノミーイベント | FOODSCAPE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap');
+  :root {
+    --forest:#1A3A2A;--sage:#2E7D32;--mist:#A8C8A8;
+    --gold:#B8860B;--gold-l:#E8C84A;--cream:#F5F1E8;
+    --warm:#FAFAF8;--text:#1C1C1C;--muted:#6B7280;
+    --border:rgba(26,58,42,0.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans JP',sans-serif;background:var(--cream);color:var(--text);font-size:14px;line-height:1.6;}
+  .wrap{max-width:980px;margin:0 auto;padding:2.5rem 1.2rem;}
+
+  .hd{text-align:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
+  .hd-eye{font-family:'Playfair Display',serif;font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.5rem;}
+  .hd-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--forest);margin-bottom:.3rem;}
+  .hd-sub{font-size:12px;color:var(--muted);letter-spacing:.04em;}
+
+  .stats{display:flex;justify-content:center;gap:2rem;margin-bottom:1.8rem;padding:1rem;background:var(--forest);border-radius:8px;}
+  .stat{text-align:center;}
+  .stat-n{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold-l);font-weight:700;line-height:1;}
+  .stat-l{font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase;margin-top:2px;}
+
+  .filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.8rem;justify-content:center;}
+  .fb{padding:6px 16px;border-radius:30px;border:1.5px solid var(--border);background:var(--warm);color:var(--muted);font-family:'Noto Sans JP',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;letter-spacing:.04em;}
+  .fb:hover{border-color:var(--sage);color:var(--forest);}
+  .fb.on{background:var(--forest);border-color:var(--forest);color:#fff;font-weight:500;}
+
+  .region{margin-bottom:2.2rem;}
+  .rh{display:flex;align-items:center;gap:10px;margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:1.5px solid var(--forest);}
+  .rdot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .rtitle{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--forest);letter-spacing:.04em;}
+  .rcnt{margin-left:auto;font-size:10px;color:var(--muted);font-family:monospace;}
+
+  table{width:100%;border-collapse:collapse;background:var(--warm);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+  th{background:var(--forest);color:rgba(255,255,255,.65);font-size:10px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;text-align:left;}
+  td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(26,58,42,0.03);}
+
+  .ename{font-weight:500;color:var(--forest);font-size:13px;line-height:1.35;}
+  .ecity{font-size:11px;color:var(--muted);margin-top:2px;}
+  .elink{display:inline-block;margin-top:3px;font-size:10px;color:var(--sage);text-decoration:none;border-bottom:1px dotted var(--sage);}
+  .elink:hover{color:var(--forest);}
+  .edate{white-space:nowrap;color:var(--muted);font-size:11px;min-width:88px;}
+  .badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;letter-spacing:.03em;white-space:nowrap;}
+  .b-cng{background:#EDE8F5;color:#5B3A9E;}
+  .b-fes{background:#E8F5E9;color:#2E7D32;}
+  .b-fai{background:#FFF3E0;color:#E65100;}
+  .b-awd{background:#FCE4EC;color:#C62828;}
+  .b-sum{background:#E3F2FD;color:#1565C0;}
+  .b-loc{background:#F3E8D0;color:#7B4F1A;}
+  .tier{font-size:12px;color:var(--gold);}
+
+  .region.hidden{display:none;}
+
+  .note{text-align:center;font-size:11px;color:var(--muted);margin-top:1.8rem;padding-top:1.2rem;border-top:1px solid var(--border);line-height:1.8;}
+
+  @media(max-width:600px){
+    th:nth-child(4),td:nth-child(4){display:none;}
+    .hd-title{font-size:20px;}
+    .stats{gap:1.2rem;}
+    .stat-n{font-size:18px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hd">
+  <div class="hd-eye">FOODSCAPE — Gastronomy City Media —</div>
+  <div class="hd-title">世界のガストロノミーイベント 2026</div>
+  <div class="hd-sub">欧州・アジア・日本・北中南米・中東アフリカ｜公式サイトリンク付き</div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-n">63</div><div class="stat-l">掲載イベント</div></div>
+  <div class="stat"><div class="stat-n">5</div><div class="stat-l">対象地域</div></div>
+  <div class="stat"><div class="stat-n">32</div><div class="stat-l">対象国</div></div>
+  <div class="stat"><div class="stat-n">2026</div><div class="stat-l">年度版</div></div>
+</div>
+
+<div class="filters">
+  <button class="fb on" onclick="filter('all',this)">すべて</button>
+  <button class="fb" onclick="filter('eu',this)">🇪🇺 欧州</button>
+  <button class="fb" onclick="filter('as',this)">🌏 アジア</button>
+  <button class="fb" onclick="filter('jp',this)">🇯🇵 日本</button>
+  <button class="fb" onclick="filter('am',this)">🌎 北中南米</button>
+  <button class="fb" onclick="filter('me',this)">🌍 中東・アフリカ</button>
+</div>
+
+<!-- ===== EUROPE ===== -->
+<div class="region" data-r="eu">
+  <div class="rh">
+    <div class="rdot" style="background:#5B3A9E;"></div>
+    <div class="rtitle">欧州のイベント</div>
+    <div class="rcnt">20 EVENTS</div>
+  </div>
+  <table>
+    <thead><tr><th>イベント名・公式サイト</th><th>開催時期</th><th>種別</th><th>Tier</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ename">グリューネ・ヴォッヘ（国際農食展）</div><div class="ecity">🇩🇪 ドイツ・ベルリン</div><a class="elink" href="https://www.gruene-woche.de" target="_blank">gruene-woche.de ↗</a></td><td class="edate">1月16〜25日</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">マドリード・フュージョン</div><div class="ecity">🇪🇸 スペイン・マドリード</div><a class="elink" href="https://www.madridfusion.net" target="_blank">madridfusion.net ↗</a></td><td class="edate">1月26〜28日</td><td><span class="badge b-cng">会議</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">フルーツ・ロジスティカ（生鮮食品展）</div><div class="ecity">🇩🇪 ドイツ・ベルリン</div><a class="elink" href="https://www.fruitlogistica.com" target="_blank">fruitlogistica.com ↗</a></td><td class="edate">2月4〜6日</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">エスペレット唐辛子祭り</div><div class="ecity">🇫🇷 フランス・バスク地方</div><a class="elink" href="https://www.pimentespelette.com" target="_blank">pimentespelette.com ↗</a></td><td class="edate">10月末</td><td><span class="badge b-loc">ローカル祭</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">IFE（国際食品・飲料展）</div><div class="ecity">🇬🇧 イギリス・ロンドン</div><a class="elink" href="https://www.ife.co.uk" target="_blank">ife.co.uk ↗</a></td><td class="edate">3月20〜4月1日</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">アントワープ・プルーフ（食フェス）</div><div class="ecity">🇧🇪 ベルギー・アントワープ</div><a class="elink" href="https://www.antwerpenproeft.be" target="_blank">antwerpenproeft.be ↗</a></td><td class="edate">6月下旬</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">プローヴネミント（ガストロノミー祭）</div><div class="ecity">🇳🇱 オランダ・マーストリヒト</div><a class="elink" href="https://www.preuvenemint.nl" target="_blank">preuvenemint.nl ↗</a></td><td class="edate">8月下旬</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">アムステルダム・ロールキッチンズ</div><div class="ecity">🇳🇱 オランダ・アムステルダム</div><a class="elink" href="https://www.rollendekelders.nl" target="_blank">rollendekelders.nl ↗</a></td><td class="edate">5〜6月</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">コペンハーゲン・クッキング</div><div class="ecity">🇩🇰 デンマーク・コペンハーゲン</div><a class="elink" href="https://copenhagencooking.dk" target="_blank">copenhagencooking.dk ↗</a></td><td class="edate">8月下旬〜9月</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">クレタ島ダイエット・フェスティバル</div><div class="ecity">🇬🇷 ギリシャ・クレタ島・レシムノン</div><a class="elink" href="https://www.incrediblecrete.gr" target="_blank">incrediblecrete.gr ↗</a></td><td class="edate">7月</td><td><span class="badge b-loc">ローカル祭</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">ゴゾ島ガストロノミーフェスティバル</div><div class="ecity">🇲🇹 マルタ・ゴゾ島</div><a class="elink" href="https://www.visitgozo.com" target="_blank">visitgozo.com ↗</a></td><td class="edate">通年（2026欧州ガストロノミー地域）</td><td><span class="badge b-loc">ローカル祭</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">アルバ・トリュフフェア</div><div class="ecity">🇮🇹 イタリア・アルバ</div><a class="elink" href="https://www.fieradeltartufo.org" target="_blank">fieradeltartufo.org ↗</a></td><td class="edate">10〜11月</td><td><span class="badge b-loc">ローカル祭</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">ヴィラージュ・インターナショナル・ド・ラ・ガストロノミー</div><div class="ecity">🇫🇷 フランス・パリ</div><a class="elink" href="https://www.gouvernement.fr" target="_blank">gouvernement.fr ↗</a></td><td class="edate">9月10〜13日</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">ロンドン・レストランフェスティバル</div><div class="ecity">🇬🇧 イギリス・ロンドン</div><a class="elink" href="https://www.londonrestaurantfestival.com" target="_blank">londonrestaurantfestival.com ↗</a></td><td class="edate">10月1〜31日</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">サン・セバスチャン・ガストロノミカ</div><div class="ecity">🇪🇸 スペイン・サン・セバスチャン</div><a class="elink" href="https://www.gastronomika.eus" target="_blank">gastronomika.eus ↗</a></td><td class="edate">10月6〜9日</td><td><span class="badge b-cng">会議</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">SIAL パリ（国際食品見本市）</div><div class="ecity">🇫🇷 フランス・パリ</div><a class="elink" href="https://www.sialparis.com" target="_blank">sialparis.com ↗</a></td><td class="edate">10月17〜21日</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">フェット・ドゥ・ラ・シャートリュー（シャートリューズ祭）</div><div class="ecity">🇫🇷 フランス・ブルゴーニュ・ディジョン</div><a class="elink" href="https://www.foire-gastronomique-dijon.com" target="_blank">foire-gastronomique-dijon.com ↗</a></td><td class="edate">10月下旬〜11月</td><td><span class="badge b-loc">ローカル祭</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">サロン・デュ・ショコラ（パリ）</div><div class="ecity">🇫🇷 フランス・パリ</div><a class="elink" href="https://www.salon-du-chocolat.com" target="_blank">salon-du-chocolat.com ↗</a></td><td class="edate">10月28日〜11月1日</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">フューチャー・フードテック ヨーロッパ</div><div class="ecity">🇬🇧 イギリス・ロンドン</div><a class="elink" href="https://futurefoodtech.com" target="_blank">futurefoodtech.com ↗</a></td><td class="edate">9月24〜25日</td><td><span class="badge b-sum">サミット</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">ヴェイマール・オニオンマーケット（ツヴィーベルマルクト）</div><div class="ecity">🇩🇪 ドイツ・ヴェイマール</div><a class="elink" href="https://www.weimar.de/tourismus" target="_blank">weimar.de ↗</a></td><td class="edate">10月中旬</td><td><span class="badge b-loc">ローカル祭</span></td><td class="tier">★</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== ASIA ===== -->
+<div class="region" data-r="as">
+  <div class="rh">
+    <div class="rdot" style="background:#2E7D32;"></div>
+    <div class="rtitle">アジアのイベント</div>
+    <div class="rcnt">16 EVENTS</div>
+  </div>
+  <table>
+    <thead><tr><th>イベント名・公式サイト</th><th>開催時期</th><th>種別</th><th>Tier</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ename">国際ガストロノミーシティフェスト（マカオ）</div><div class="ecity">🇲🇴 中国・マカオ</div><a class="elink" href="https://www.macaotourism.gov.mo" target="_blank">macaotourism.gov.mo ↗</a></td><td class="edate">3月20〜29日</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">タイ観光フェスティバル2026</div><div class="ecity">🇹🇭 タイ・バンコク</div><a class="elink" href="https://www.tourismthailand.org" target="_blank">tourismthailand.org ↗</a></td><td class="edate">3月25〜29日</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">FHA フード＆ホスピタリティアジア</div><div class="ecity">🇸🇬 シンガポール</div><a class="elink" href="https://www.fhasiafood.com" target="_blank">fhasiafood.com ↗</a></td><td class="edate">4月21〜24日</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">アートボックス・シンガポール2026</div><div class="ecity">🇸🇬 シンガポール</div><a class="elink" href="https://artbox.sg" target="_blank">artbox.sg ↗</a></td><td class="edate">4月3〜12日</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">THAIFEX アヌーガアジア</div><div class="ecity">🇹🇭 タイ・バンコク</div><a class="elink" href="https://thaifex-anuga.com" target="_blank">thaifex-anuga.com ↗</a></td><td class="edate">5月26〜30日</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">シンガポール・フードエキスポ</div><div class="ecity">🇸🇬 シンガポール</div><a class="elink" href="https://singaporefoodexpo.org.sg" target="_blank">singaporefoodexpo.org.sg ↗</a></td><td class="edate">5月29〜6月1日</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">ヤミーフードエキスポ（ヌードル・韓国料理・台湾食）</div><div class="ecity">🇸🇬 シンガポール EXPO</div><a class="elink" href="https://eatbook.sg/food-events-singapore-2026" target="_blank">eatbook.sg ↗</a></td><td class="edate">6月頃</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">UN Tourism世界ガストロノミーフォーラム</div><div class="ecity">🇵🇭 フィリピン・セブ</div><a class="elink" href="https://www.unwto.org" target="_blank">unwto.org ↗</a></td><td class="edate">6月26〜27日</td><td><span class="badge b-sum">サミット</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">シンガポール・フードフェスティバル</div><div class="ecity">🇸🇬 シンガポール（デンプシー他）</div><a class="elink" href="https://www.visitsingapore.com/whats-happening/all-happenings/events/singapore-food-festival/" target="_blank">visitsingapore.com ↗</a></td><td class="edate">9月</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">Asia's 50 Best Restaurants 授賞式</div><div class="ecity">🌏 アジア各地（持ち回り）</div><a class="elink" href="https://www.theworlds50best.com/asia" target="_blank">theworlds50best.com ↗</a></td><td class="edate">5〜6月</td><td><span class="badge b-awd">アワード</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">ウブド・フードフェスティバル</div><div class="ecity">🇮🇩 インドネシア・バリ島ウブド</div><a class="elink" href="https://ubudfoodfestival.com" target="_blank">ubudfoodfestival.com ↗</a></td><td class="edate">5月</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">プーケット・ベジタリアンフェスティバル</div><div class="ecity">🇹🇭 タイ・プーケット</div><a class="elink" href="https://www.phuketvegetarian.com" target="_blank">phuketvegetarian.com ↗</a></td><td class="edate">10月</td><td><span class="badge b-loc">ローカル祭</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">香港ワイン＆ダイン・フェスティバル</div><div class="ecity">🇭🇰 香港</div><a class="elink" href="https://www.discoverhongkong.com" target="_blank">discoverhongkong.com ↗</a></td><td class="edate">10〜11月</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">ASEAN食品・飲料展</div><div class="ecity">🌏 東南アジア各地</div><a class="elink" href="https://www.aseanfnb.com" target="_blank">aseanfnb.com ↗</a></td><td class="edate">年内開催</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">ジャイプール・リテラチャー＆フードフェスティバル</div><div class="ecity">🇮🇳 インド・ジャイプール</div><a class="elink" href="https://jaipurliteraturefestival.org" target="_blank">jaipurliteraturefestival.org ↗</a></td><td class="edate">1月下旬</td><td><span class="badge b-loc">ローカル祭</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">ソウル・フード・ウィーク</div><div class="ecity">🇰🇷 韓国・ソウル</div><a class="elink" href="https://www.visitkorea.or.kr" target="_blank">visitkorea.or.kr ↗</a></td><td class="edate">秋頃</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== JAPAN ===== -->
+<div class="region" data-r="jp">
+  <div class="rh">
+    <div class="rdot" style="background:#B8860B;"></div>
+    <div class="rtitle">日本のイベント</div>
+    <div class="rcnt">15 EVENTS</div>
+  </div>
+  <table>
+    <thead><tr><th>イベント名・公式サイト</th><th>開催時期</th><th>種別</th><th>Tier</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ename">新潟ガストロノミーアワード2026</div><div class="ecity">🇯🇵 新潟県</div><a class="elink" href="https://www.niigata-gastronomy-award.jp" target="_blank">niigata-gastronomy-award.jp ↗</a></td><td class="edate">2〜3月</td><td><span class="badge b-awd">アワード</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">CRAFT SAKE WEEK 2026</div><div class="ecity">🇯🇵 東京都・六本木</div><a class="elink" href="https://craftsakeweek.com" target="_blank">craftsakeweek.com ↗</a></td><td class="edate">4月</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">庄内ガストロノミーツアー（鶴岡）</div><div class="ecity">🇯🇵 山形県・鶴岡市</div><a class="elink" href="https://shonai-gastronomy.jp" target="_blank">shonai-gastronomy.jp ↗</a></td><td class="edate">通年</td><td><span class="badge b-loc">ローカル体験</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">京丹後ガストロノミーフィールド</div><div class="ecity">🇯🇵 京都府・京丹後市</div><a class="elink" href="https://www.kyotango.gr.jp" target="_blank">kyotango.gr.jp ↗</a></td><td class="edate">通年</td><td><span class="badge b-loc">ローカル体験</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">淡路島ガストロノミーウィーク</div><div class="ecity">🇯🇵 兵庫県・淡路島</div><a class="elink" href="https://awajishima-kanko.jp" target="_blank">awajishima-kanko.jp ↗</a></td><td class="edate">春〜秋</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">函館朝市ガストロノミーウィーク</div><div class="ecity">🇯🇵 北海道・函館市</div><a class="elink" href="https://www.hakodate-kankou.com" target="_blank">hakodate-kankou.com ↗</a></td><td class="edate">夏</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">坂井市・越前ガニガストロノミー</div><div class="ecity">🇯🇵 福井県・坂井市</div><a class="elink" href="https://www.city.sakai.lg.jp" target="_blank">city.sakai.lg.jp ↗</a></td><td class="edate">11〜3月</td><td><span class="badge b-loc">ローカル体験</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">多気町VISON食フェスタ</div><div class="ecity">🇯🇵 三重県・多気町</div><a class="elink" href="https://vison.jp" target="_blank">vison.jp ↗</a></td><td class="edate">秋</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">廿日市市ガストロノミーフェスタ</div><div class="ecity">🇯🇵 広島県・廿日市市</div><a class="elink" href="https://www.city.hatsukaichi.hiroshima.jp" target="_blank">city.hatsukaichi.hiroshima.jp ↗</a></td><td class="edate">秋</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">東北食材ガストロノミーツアー</div><div class="ecity">🇯🇵 東北各地</div><a class="elink" href="https://tohoku.com" target="_blank">tohoku.com ↗</a></td><td class="edate">春・秋</td><td><span class="badge b-loc">ローカル体験</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">石川・能登復興ガストロノミーイベント</div><div class="ecity">🇯🇵 石川県・能登地方</div><a class="elink" href="https://www.pref.ishikawa.jp" target="_blank">pref.ishikawa.jp ↗</a></td><td class="edate">2026年通年</td><td><span class="badge b-loc">ローカル体験</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">ジャパン・ヴィーガンツアー2026</div><div class="ecity">🇯🇵 全国各地</div><a class="elink" href="https://japantravel.co.jp" target="_blank">japantravel.co.jp ↗</a></td><td class="edate">春</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">丹後・海の京都ガストロノミーフェスタ</div><div class="ecity">🇯🇵 京都府北部</div><a class="elink" href="https://www.uminokyoto.jp" target="_blank">uminokyoto.jp ↗</a></td><td class="edate">秋</td><td><span class="badge b-loc">ローカル体験</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">雲仙市・島原半島ジオガストロノミー</div><div class="ecity">🇯🇵 長崎県・雲仙市</div><a class="elink" href="https://www.city.unzen.nagasaki.jp" target="_blank">city.unzen.nagasaki.jp ↗</a></td><td class="edate">通年</td><td><span class="badge b-loc">ローカル体験</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">美食都市フォーラム2026</div><div class="ecity">🇯🇵 東京（予定）</div><a class="elink" href="https://gastronomy-city.org" target="_blank">gastronomy-city.org ↗</a></td><td class="edate">10月</td><td><span class="badge b-sum">フォーラム</span></td><td class="tier">★★★</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== AMERICAS ===== -->
+<div class="region" data-r="am">
+  <div class="rh">
+    <div class="rdot" style="background:#1565C0;"></div>
+    <div class="rtitle">北中南米のイベント</div>
+    <div class="rcnt">8 EVENTS</div>
+  </div>
+  <table>
+    <thead><tr><th>イベント名・公式サイト</th><th>開催時期</th><th>種別</th><th>Tier</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ename">ペブルビーチ・フード＆ワイン</div><div class="ecity">🇺🇸 アメリカ・カリフォルニア</div><a class="elink" href="https://www.pbfw.com" target="_blank">pbfw.com ↗</a></td><td class="edate">4月</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">ニューオーリンズ・ワイン＆フードエクスペリエンス</div><div class="ecity">🇺🇸 アメリカ・ニューオーリンズ</div><a class="elink" href="https://www.nowfe.com" target="_blank">nowfe.com ↗</a></td><td class="edate">5月</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">ギルロイ・ガーリックフェスティバル</div><div class="ecity">🇺🇸 アメリカ・カリフォルニア州ギルロイ</div><a class="elink" href="https://gilroygarlicfestival.com" target="_blank">gilroygarlicfestival.com ↗</a></td><td class="edate">7月22〜25日</td><td><span class="badge b-loc">ローカル祭</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">メイン・ロブスターフェスティバル</div><div class="ecity">🇺🇸 アメリカ・メイン州ロックランド</div><a class="elink" href="https://www.mainelobsterfestival.com" target="_blank">mainelobsterfestival.com ↗</a></td><td class="edate">8月上旬</td><td><span class="badge b-loc">ローカル祭</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">世界ガストロノミーサミット（エクアドル）</div><div class="ecity">🇪🇨 エクアドル・マナビ</div><a class="elink" href="https://www.worldregionofgastronomy.org" target="_blank">worldregionofgastronomy.org ↗</a></td><td class="edate">9月</td><td><span class="badge b-sum">サミット</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">Mistura（ペルー国際食フェスティバル）</div><div class="ecity">🇵🇪 ペルー・リマ</div><a class="elink" href="https://www.apega.pe" target="_blank">apega.pe ↗</a></td><td class="edate">9〜10月</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">メキシコシティ・フードウィーク</div><div class="ecity">🇲🇽 メキシコ・メキシコシティ</div><a class="elink" href="https://foodandtravelmx.com" target="_blank">foodandtravelmx.com ↗</a></td><td class="edate">秋</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+      <tr><td><div class="ename">ブエノスアイレス・ガストロノミー・ウィーク</div><div class="ecity">🇦🇷 アルゼンチン・ブエノスアイレス</div><a class="elink" href="https://www.buenosaires.gob.ar/gastronomy" target="_blank">buenosaires.gob.ar ↗</a></td><td class="edate">秋</td><td><span class="badge b-fes">フェスティバル</span></td><td class="tier">★★</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== MIDDLE EAST & AFRICA ===== -->
+<div class="region" data-r="me">
+  <div class="rh">
+    <div class="rdot" style="background:#C62828;"></div>
+    <div class="rtitle">中東・アフリカのイベント</div>
+    <div class="rcnt">4 EVENTS</div>
+  </div>
+  <table>
+    <thead><tr><th>イベント名・公式サイト</th><th>開催時期</th><th>種別</th><th>Tier</th></tr></thead>
+    <tbody>
+      <tr><td><div class="ename">ガルフード2026</div><div class="ecity">🇦🇪 UAE・ドバイ</div><a class="elink" href="https://www.gulfood.com" target="_blank">gulfood.com ↗</a></td><td class="edate">2〜3月</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">中東・北アフリカ50ベストレストラン授賞式</div><div class="ecity">🇦🇪 UAE・アブダビ</div><a class="elink" href="https://www.theworlds50best.com/mena" target="_blank">theworlds50best.com ↗</a></td><td class="edate">2月</td><td><span class="badge b-awd">アワード</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">Africa Food Show 2026</div><div class="ecity">🇿🇦 南アフリカ・ケープタウン</div><a class="elink" href="https://africafoodshow.co.za" target="_blank">africafoodshow.co.za ↗</a></td><td class="edate">6月10〜12日</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★★</td></tr>
+      <tr><td><div class="ename">Food Africa 2026</div><div class="ecity">🇪🇬 エジプト・カイロ</div><a class="elink" href="https://foodafrica-expo.com" target="_blank">foodafrica-expo.com ↗</a></td><td class="edate">12月7〜10日</td><td><span class="badge b-fai">見本市</span></td><td class="tier">★★★</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="note">
+  本一覧は美食都市研究会が独自に調査・編集したものです。開催日程は変更になる場合があります。<br>
+  最新情報は各イベントの公式サイトをご確認ください。<br>
+  © FOODSCAPE — Gastronomy City Media — by 一般社団法人美食都市研究会
+</div>
+
+</div>
+<script>
+function filter(r, btn) {
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.region').forEach(s => {
+    s.classList.toggle('hidden', r !== 'all' && s.dataset.r !== r);
+  });
+}
+</script>
+</body>
+</html>
